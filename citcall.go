@@ -1,16 +1,20 @@
 package citcallgo
 
 import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 )
 
-const (
-	defaultApiURL = "https://citcall.pub"
-	apiVersion    = "v3"
-)
-
 type ApiKey string
+
+func (k ApiKey) String() string {
+	return string(k)
+}
 
 type CitcallOption func(*Citcall)
 
@@ -20,12 +24,16 @@ type Citcall struct {
 
 	apiUrl     string
 	apiVersion string
+	citcallURL CitcallURL
 
-	apiKey ApiKey
+	ApiKey ApiKey
 }
 
 func New(apiKey ApiKey, opts ...CitcallOption) *Citcall {
-	u, err := url.Parse(defaultApiURL)
+
+	citcallURL := NewCitcallURL()
+
+	u, err := url.Parse(citcallURL.DefaultApiURL)
 	if err != nil {
 		panic(err)
 	}
@@ -33,9 +41,10 @@ func New(apiKey ApiKey, opts ...CitcallOption) *Citcall {
 	c := &Citcall{
 		httpClient: http.DefaultClient,
 		baseUrl:    u,
-		apiUrl: defaultApiURL,
-		apiVersion: apiVersion,
-		apiKey:     apiKey,
+		apiUrl:     citcallURL.DefaultApiURL,
+		apiVersion: citcallURL.ApiVersion,
+		citcallURL: *citcallURL,
+		ApiKey:     apiKey,
 	}
 
 	for _, opt := range opts {
@@ -67,4 +76,47 @@ func WithCustomApiVersion(version string) CitcallOption {
 	return func(c *Citcall) {
 		c.apiVersion = version
 	}
+}
+
+func (c *Citcall) request(ctx context.Context, method string, urlStr string, requestBody interface{}) (*http.Response, error) {
+	u, err := c.baseUrl.Parse(fmt.Sprintf("%s/%s", c.apiVersion, urlStr))
+	if err != nil {
+		return nil, err
+	}
+
+	var buf io.ReadWriter
+	if requestBody != nil {
+		body, err := json.Marshal(requestBody)
+		if err != nil {
+			return nil, err
+		}
+		
+		buf = bytes.NewBuffer(body)
+	}
+
+	req, err := http.NewRequest(method, u.String(), buf)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Authorization", fmt.Sprintf("Apikey %s", c.ApiKey.String()))
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+
+	res, err := c.httpClient.Do(req.WithContext(ctx))
+	if err != nil {
+		return nil, err
+	}
+
+	if res.StatusCode != http.StatusOK {
+		var apiErr Error
+		err = json.NewDecoder(res.Body).Decode(&apiErr)
+		if err != nil {
+			return nil, err
+		}
+
+		return nil, &apiErr
+	}
+
+	return res, nil
 }
