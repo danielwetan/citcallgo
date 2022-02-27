@@ -2,11 +2,13 @@
 POST https://citcall.pub/v3/motp
 Content-Type: application/json
 Authorization: Apikey {YOUR_APIKEY}
+
 {
 	"msisdn": "6281234567890",
 	"gateway": 0
 }
 
+#####
 # SMS
 POST https://citcall.pub/v3/sms
 Content-Type: application/json
@@ -17,6 +19,7 @@ Authorization: Apikey {YOUR_APIKEY}
 	"text": "Hello World!"
 }
 
+#####
 # SMS OTP
 POST https://citcall.pub/v3/smsotp
 Content-Type: application/json
