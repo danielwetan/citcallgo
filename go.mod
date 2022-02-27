@@ -1,3 +1,3 @@
-module github.com/danielwetan/citcall-go
+module github.com/danielwetan/citcallgo
 
 go 1.13
