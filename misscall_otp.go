@@ -19,7 +19,7 @@ type MisscallOtpResponse struct {
 	Gateway int    `json:"gateway"`
 }
 
-func (c *Citcall) SendMisscall(ctx context.Context, requestBody *MisscallOtpRequest) (*MisscallOtpResponse, error) {
+func (c *citcall) SendMisscall(ctx context.Context, requestBody *MisscallOtpRequest) (*MisscallOtpResponse, error) {
 	res, err := c.request(ctx, http.MethodPost, c.citcallURL.misscallOtp, requestBody)
 	if err != nil {
 		return nil, err

@@ -16,9 +16,9 @@ func (k apiKey) String() string {
 	return string(k)
 }
 
-type CitcallOption func(*Citcall)
+type citcallOption func(*citcall)
 
-type Citcall struct {
+type citcall struct {
 	httpClient *http.Client
 	baseUrl    *url.URL
 
@@ -29,7 +29,7 @@ type Citcall struct {
 	apiKey apiKey
 }
 
-func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
+func New(apiKey apiKey, opts ...citcallOption) *citcall {
 
 	citcallURL := newCitcallURL()
 
@@ -38,7 +38,7 @@ func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 		panic(err)
 	}
 
-	c := &Citcall{
+	c := &citcall{
 		httpClient: http.DefaultClient,
 		baseUrl:    u,
 		apiUrl:     citcallURL.defaultApiURL,
@@ -55,20 +55,20 @@ func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 }
 
 // Initialize Citcall with custom API url
-func WithCustomApiURL(url string) CitcallOption {
-	return func(c *Citcall) {
+func WithCustomApiURL(url string) citcallOption {
+	return func(c *citcall) {
 		c.apiUrl = url
 	}
 }
 
 // Initialize Citcall with custom API version
-func WithCustomApiVersion(version string) CitcallOption {
-	return func(c *Citcall) {
+func WithCustomApiVersion(version string) citcallOption {
+	return func(c *citcall) {
 		c.apiVersion = version
 	}
 }
 
-func (c *Citcall) request(ctx context.Context, method string, urlStr string, requestBody interface{}) (*http.Response, error) {
+func (c *citcall) request(ctx context.Context, method string, urlStr string, requestBody interface{}) (*http.Response, error) {
 	u, err := c.baseUrl.Parse(fmt.Sprintf("%s/%s", c.apiVersion, urlStr))
 	if err != nil {
 		return nil, err

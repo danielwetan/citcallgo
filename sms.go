@@ -24,7 +24,7 @@ type SMSResponse struct {
 	Price    string `json:"price"`
 }
 
-func (c *Citcall) SendSMS(ctx context.Context, requestBody *SMSRequest) (*SMSResponse, error) {
+func (c *citcall) SendSMS(ctx context.Context, requestBody *SMSRequest) (*SMSResponse, error) {
 	res, err := c.request(ctx, http.MethodPost, c.citcallURL.sms, requestBody)
 	if err != nil {
 		return nil, err
