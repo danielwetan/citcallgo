@@ -24,7 +24,7 @@ type Citcall struct {
 
 	apiUrl     string
 	apiVersion string
-	citcallURL CitcallURL
+	citcallURL citcallURL
 
 	apiKey apiKey
 }
