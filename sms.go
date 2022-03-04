@@ -6,12 +6,14 @@ import (
 	"net/http"
 )
 
+// citcall sms request body
 type SMSRequest struct {
 	Msisdn   string `json:"msisdn"`
 	SenderId string `json:"senderid"`
 	Text     string `json:"text"`
 }
 
+// citcall sms response
 type SMSResponse struct {
 	Rc       int    `json:"rc"`
 	Info     string `json:"info"`
@@ -24,6 +26,7 @@ type SMSResponse struct {
 	Price    string `json:"price"`
 }
 
+// citcall send sms
 func (c *citcall) SendSMS(ctx context.Context, requestBody *SMSRequest) (*SMSResponse, error) {
 	res, err := c.request(ctx, http.MethodPost, c.citcallURL.sms, requestBody)
 	if err != nil {

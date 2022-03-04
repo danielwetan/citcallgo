@@ -29,6 +29,7 @@ type citcall struct {
 	apiKey apiKey
 }
 
+// Initialize new citcallgo instance
 func New(apiKey apiKey, opts ...citcallOption) *citcall {
 
 	citcallURL := newCitcallURL()
@@ -54,14 +55,14 @@ func New(apiKey apiKey, opts ...citcallOption) *citcall {
 	return c
 }
 
-// Initialize Citcall with custom API url
+// Initialize citcallgo with custom API url
 func WithCustomApiURL(url string) citcallOption {
 	return func(c *citcall) {
 		c.apiUrl = url
 	}
 }
 
-// Initialize Citcall with custom API version
+// Initialize citcallgo with custom API version
 func WithCustomApiVersion(version string) citcallOption {
 	return func(c *citcall) {
 		c.apiVersion = version

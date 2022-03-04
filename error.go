@@ -1,7 +1,9 @@
 package citcallgo
 
+// citcallgo error code type
 type ErrorCode string
 
+// citcallgo error code struct
 type Error struct {
 	Status  int       `json:"status"`
 	Code    ErrorCode `json:"code"`

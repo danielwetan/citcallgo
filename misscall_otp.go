@@ -6,11 +6,13 @@ import (
 	"net/http"
 )
 
+// citcall misscall otp request body
 type MisscallOtpRequest struct {
 	Msisdn  string `json:"msisdn"`
 	Gateway int    `json:"gateway"`
 }
 
+// citcall misscall otp response 
 type MisscallOtpResponse struct {
 	Rc      int    `json:"rc"`
 	Trxid   string `json:"trxid"`
@@ -19,6 +21,7 @@ type MisscallOtpResponse struct {
 	Gateway int    `json:"gateway"`
 }
 
+// citcall send misscall
 func (c *citcall) SendMisscall(ctx context.Context, requestBody *MisscallOtpRequest) (*MisscallOtpResponse, error) {
 	res, err := c.request(ctx, http.MethodPost, c.citcallURL.misscallOtp, requestBody)
 	if err != nil {
