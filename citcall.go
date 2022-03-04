@@ -10,9 +10,9 @@ import (
 	"net/url"
 )
 
-type ApiKey string
+type apiKey string
 
-func (k ApiKey) String() string {
+func (k apiKey) String() string {
 	return string(k)
 }
 
@@ -26,10 +26,10 @@ type Citcall struct {
 	apiVersion string
 	citcallURL CitcallURL
 
-	ApiKey ApiKey
+	apiKey apiKey
 }
 
-func New(apiKey ApiKey, opts ...CitcallOption) *Citcall {
+func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 
 	citcallURL := NewCitcallURL()
 
@@ -44,7 +44,7 @@ func New(apiKey ApiKey, opts ...CitcallOption) *Citcall {
 		apiUrl:     citcallURL.DefaultApiURL,
 		apiVersion: citcallURL.ApiVersion,
 		citcallURL: *citcallURL,
-		ApiKey:     apiKey,
+		apiKey:     apiKey,
 	}
 
 	for _, opt := range opts {
@@ -90,7 +90,7 @@ func (c *Citcall) request(ctx context.Context, method string, urlStr string, req
 		if err != nil {
 			return nil, err
 		}
-		
+
 		buf = bytes.NewBuffer(body)
 	}
 
@@ -99,7 +99,7 @@ func (c *Citcall) request(ctx context.Context, method string, urlStr string, req
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", fmt.Sprintf("Apikey %s", c.ApiKey.String()))
+	req.Header.Add("Authorization", fmt.Sprintf("Apikey %s", c.apiKey.String()))
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/json")
 
