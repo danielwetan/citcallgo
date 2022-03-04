@@ -6,7 +6,6 @@ We can consume Citcall API using this library. You need Citcall Apikey and your 
 ## Table Of Content
 * [Features](https://github.com/danielwetan/citcallgo#features)
 * [Installation](https://github.com/danielwetan/citcallgo#installation)
-* [Features](https://github.com/danielwetan/citcallgo#features)
 * [Usage](https://github.com/danielwetan/citcallgo#usage)
 * [Examples](https://github.com/danielwetan/citcallgo#examples)
     * [Misscall OTP](https://github.com/danielwetan/citcallgo#misscall-otp)
