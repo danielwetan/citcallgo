@@ -54,16 +54,6 @@ func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 	return c
 }
 
-// SetCustomApiURL overrides current Citcall instance API url
-func (c *Citcall) SetCustomApiURL(url string) {
-	c.apiUrl = url
-}
-
-// SetCustomApiVersion overrides current Citcall instance API version
-func (c *Citcall) SetCustomApiVersion(version string) {
-	c.apiVersion = version
-}
-
 // Initialize Citcall with custom API url
 func WithCustomApiURL(url string) CitcallOption {
 	return func(c *Citcall) {
