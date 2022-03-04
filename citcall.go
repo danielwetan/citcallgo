@@ -31,9 +31,9 @@ type Citcall struct {
 
 func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 
-	citcallURL := NewCitcallURL()
+	citcallURL := newCitcallURL()
 
-	u, err := url.Parse(citcallURL.DefaultApiURL)
+	u, err := url.Parse(citcallURL.defaultApiURL)
 	if err != nil {
 		panic(err)
 	}
@@ -41,8 +41,8 @@ func New(apiKey apiKey, opts ...CitcallOption) *Citcall {
 	c := &Citcall{
 		httpClient: http.DefaultClient,
 		baseUrl:    u,
-		apiUrl:     citcallURL.DefaultApiURL,
-		apiVersion: citcallURL.ApiVersion,
+		apiUrl:     citcallURL.defaultApiURL,
+		apiVersion: citcallURL.apiVersion,
 		citcallURL: *citcallURL,
 		apiKey:     apiKey,
 	}

@@ -1,14 +1,14 @@
 package citcallgo
 
 type citcallURL struct {
-	DefaultApiURL string
-	ApiVersion    string
-	MisscallOtp   string
-	Sms           string
-	SmsOTP        string
+	defaultApiURL string
+	apiVersion    string
+	misscallOtp   string
+	sms           string
+	smsOTP        string
 }
 
-func NewCitcallURL() *citcallURL {
+func newCitcallURL() *citcallURL {
 	var (
 		defaultApiURL = "https://citcall.pub"
 		apiVersion    = "v3"
@@ -18,11 +18,11 @@ func NewCitcallURL() *citcallURL {
 	)
 
 	u := &citcallURL{
-		DefaultApiURL: defaultApiURL,
-		ApiVersion:    apiVersion,
-		MisscallOtp:   misscallOtp,
-		Sms:           sms,
-		SmsOTP:        smsOtp,
+		defaultApiURL: defaultApiURL,
+		apiVersion:    apiVersion,
+		misscallOtp:   misscallOtp,
+		sms:           sms,
+		smsOTP:        smsOtp,
 	}
 
 	return u
